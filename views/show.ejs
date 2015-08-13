@@ -38,7 +38,17 @@
         <ul>
           <% commentsObjToPost.forEach(function(e){ %>
             <div class="comments_container">
-              <li><%=e.comment_text%> <span> | up votes <%=e.up_votes%> | boo votes <%=e.down_votes%> | <%=e.timestamp%></span></li>
+              <li><%=e.comment_text%> <span> | up votes <%=e.up_votes%> | boo votes <%=e.down_votes%> | <%=e.timestamp%></span>
+                <div class="buttons">
+<!-- here need to update the rows in db to increase the vote or decrease..
+ -->              <form method="GET" action="#">
+                   <input type="submit" value="Vote up!!">
+                  </form>
+                  <form method="GET" action="#">
+                    <input type="submit" value="Boo! Vote Down!">
+                  </form>
+                </div><!--buttons-->  
+              </li>
             </div><!--comments_container-->
           <% }); %>
 

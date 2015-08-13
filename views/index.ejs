@@ -21,7 +21,8 @@
       <h2> Latest Posts</h2>    
         <ul>
            <% rows.forEach(function(e){ %>
-            <li class="index_post_item"><span><a href="/articles/<%=e.id%>"><%=e.title%></a></span> by <strong><%=e.user_name%> </strong> on <%=e.timestamp%>          
+            <li class="index_post_item"><span><a href="/articles/<%=e.id%>"><%=e.title%></a></span> by <strong><%=e.user_name%> </strong> on <%=e.timestamp%>    
+     
             </li>        
            <% }); %>  
         </ul>

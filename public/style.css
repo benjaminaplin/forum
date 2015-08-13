@@ -35,6 +35,12 @@ li span {
   padding: 5px 5px 5px 15px;
 }
 
+.buttons form {
+  margin: 5px auto;
+  display: inline-block;
+
+}
+
 .comments_container li {
   list-style: none;
 }
