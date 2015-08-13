@@ -29,7 +29,7 @@
 
     <div class="buttons">
       <form method="GET" action="/articles/<%=articleObjToPost.id%>/comments/new">
-        <input type="hidden" name="data" value="<%=JSON.stringify(articleObjToPost)%>">
+        
         <input type="submit" value="Comment on <%=articleObjToPost.user_name%>'s post!">
       </form>
     </div><!--buttons-->     
@@ -40,13 +40,16 @@
             <div class="comments_container">
               <li><%=e.comment_text%> <span> | up votes <%=e.up_votes%> | boo votes <%=e.down_votes%> | <%=e.timestamp%></span>
                 <div class="buttons">
-<!-- here need to update the rows in db to increase the vote or decrease..
- -->              <form method="GET" action="#">
+                  
+                  <form method="POST" action="/articles/<%=e.article_id%>/comments/<%=e.id%>/upvote?_method=PUT">
                    <input type="submit" value="Vote up!!">
+                   <input type="hidden" name="data" value="<%=JSON.stringify(articleObjToPost)%>">
                   </form>
-                  <form method="GET" action="#">
-                    <input type="submit" value="Boo! Vote Down!">
+
+                  <form method="POST" action="/articles/<%=e.article_id%>/comments/<%=e.id%>/downvote?_method=PUT">
+                    <input type="submit" value="Vote Down!">
                   </form>
+
                 </div><!--buttons-->  
               </li>
             </div><!--comments_container-->

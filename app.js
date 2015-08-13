@@ -87,7 +87,7 @@ app.get('/articles/:id', function(req, res){
           console.log(err);
         } else {
           var comments = rows;
-          console.log("comments", comments);
+          // console.log("comments", comments);
           comments.forEach(function(e){
             if(articleId == parseInt(e.article_id)){
               commentsObjToPost.push(e);
@@ -99,7 +99,7 @@ app.get('/articles/:id', function(req, res){
       });
       res.send(rendered);
         }
-          console.log("commentsobjtopost", commentsObjToPost);
+          // console.log("commentsobjtopost", commentsObjToPost);
       });  
     }
   });
@@ -111,19 +111,17 @@ app.get('/articles/:id/comments/new', function(req, res){
     if(err){
       console.log(err);
     } else {
-      console.log(row);
+      // console.log(row);
       var htmlNewCommentForm = fs.readFileSync('./views/new_comment.ejs', 'utf8');
       var rendered = ejs.render(htmlNewCommentForm, {row:row});
       res.send(rendered);
     }
   })
-
-
 });
 
-app.post('/articles/:id/comments', function(req, res){
+app.post('/articles/:article_id/comments', function(req, res){
   var newComment = req.body;
-  var articleId = req.params.id;
+  var articleId = req.params.article_id;
   db.run("INSERT INTO comments (comment_user_name, comment_text, article_id) VALUES (?,?,?)", newComment.comment_user_name, newComment.comment_text, articleId, function(err){
     if(err){
       console.log(err);
@@ -131,4 +129,29 @@ app.post('/articles/:id/comments', function(req, res){
   });
   res.redirect('/articles/' + articleId)
 });
+
+app.put('/articles/:article_id/comments/:id/upvote', function(req, res){
+  commentsId = req.params.id;
+  articlesId = req.params.article_id;
+  console.log("upvotin");
+  db.run('UPDATE comments SET up_votes = up_votes+1 WHERE comments.id=?', commentsId, function(err){
+    if(err){
+      console.log(err);
+    }
+    res.redirect('/articles/' + articlesId);
+  });
+});
+
+app.put('/articles/:article_id/comments/:id/downvote', function(req, res){
+  commentsId = req.params.id;
+  articlesId = req.params.article_id;
+  db.run('UPDATE comments SET down_votes = down_votes+1 WHERE comments.id=?', commentsId, function(err){
+    if(err){
+      console.log("dwnvotin");      
+    }
+    res.redirect('/articles/' + articlesId);
+
+  });
+});
+
 
