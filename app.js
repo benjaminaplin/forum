@@ -9,6 +9,10 @@ var ejs = require("ejs");
 var app = express();
 var request = require('request');
 
+//spofity variables
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -32,6 +36,7 @@ app.listen(3000, function() {
 });
 
 //routes
+
 app.get('/', function(req, res){
   res.redirect('/articles');
 });
@@ -46,6 +51,7 @@ app.get('/articles', function(req, res){
       res.send(rendered);
     }
   })
+
 });
 
 app.get('/articles/new', function(req, res){
