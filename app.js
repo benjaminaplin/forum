@@ -49,7 +49,7 @@ app.get('/articles', function(req, res){
 });
 
 app.get('/articles/new', function(req, res){
-  var htmlNewForm = fs.readFileSync('./views/new.ejs', 'utf8');
+  var htmlNewForm = fs.readFileSync('./views/new_article.ejs', 'utf8');
   res.send(htmlNewForm);
 });
 
@@ -68,7 +68,8 @@ app.get('/articles/:id', function(req, res){
   console.log(articleId);
   var htmlShow = fs.readFileSync('./views/show.ejs', 'utf8');
   var articleObjToPost;
-  var commentsObjToPost;
+  var commentsObjToPost = [];
+  var commentsObj;
 
   db.all('SELECT * FROM articles;', function(err, rows){
     if(err){
@@ -86,29 +87,48 @@ app.get('/articles/:id', function(req, res){
           console.log(err);
         } else {
           var comments = rows;
+          console.log("comments", comments);
           comments.forEach(function(e){
-            if(articleId == parseInt(e.id)){
-              commentsObjToPost = e;
+            if(articleId == parseInt(e.article_id)){
+              commentsObjToPost.push(e);
             }
           });
-          console.log("commentsobj", commentsObjToPost);
-        }
-      });  
       var rendered = ejs.render(htmlShow, {
         articleObjToPost: articleObjToPost,
         commentsObjToPost: commentsObjToPost
       });
       res.send(rendered);
+        }
+          console.log("commentsobjtopost", commentsObjToPost);
+      });  
     }
   });
 });
 
-//app.get('/articles/:id/comments/new'), function(req, res){
+app.get('/articles/:id/comments/new', function(req, res){
+  var articleIdComment = req.params.id;
+  db.get('SELECT * FROM articles WHERE id=?', articleIdComment, function(err, row){
+    if(err){
+      console.log(err);
+    } else {
+      console.log(row);
+      var htmlNewCommentForm = fs.readFileSync('./views/new_comment.ejs', 'utf8');
+      var rendered = ejs.render(htmlNewCommentForm, {row:row});
+      res.send(rendered);
+    }
+  })
 
-// });
 
-// app.post('/articles/:id/comments'), function(req, res){
+});
 
-  //res.redirect('/articles/:id')
-// });
+app.post('/articles/:id/comments', function(req, res){
+  var newComment = req.body;
+  var articleId = req.params.id;
+  db.run("INSERT INTO comments (comment_user_name, comment_text, article_id) VALUES (?,?,?)", newComment.comment_user_name, newComment.comment_text, articleId, function(err){
+    if(err){
+      console.log(err);
+    }
+  });
+  res.redirect('/articles/' + articleId)
+});
 

@@ -2,18 +2,41 @@ body {
   background-image: url(../bg/brickwall.png);
 }
 
+h2 span {
+  font-weight: bold;
+}
+
+li span {
+  font-size: 10px;
+
+  font-style: italic;
+}
+
 .container {
   margin: 15px;
 }
 
-.show_article_container
-
+.show_article_container {
+  background-color: rgba(255,255,255,.45);
+  margin: 5px auto;
+  border: solid black 1px;
+  border-radius: 3px;
+  padding: 5px 5px 5px 15px;
+}
 .newpostcontainer{
   margin: 15px;
 }
 
 .comments_container {
-  margin: 15px;
+  background-color: rgba(255,255,255,.45);
+  margin: 5px auto;
+  border: solid black 1px;
+  border-radius: 3px;
+  padding: 5px 5px 5px 15px;
+}
+
+.comments_container li {
+  list-style: none;
 }
 
 .index_post_item {
@@ -31,6 +54,11 @@ body {
 li.index_post_item span {
   font-size: 15px;
   font-weight: bold;  
+}
+
+li.index_post_item h4 {
+  font-size: 15px;
+  font-weight: bolder;  
 }
 
 li.show_comment_item {

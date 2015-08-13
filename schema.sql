@@ -31,3 +31,4 @@ INSERT INTO comments (comment_user_name, comment_text, article_id, up_votes, dow
 INSERT INTO comments (comment_user_name, comment_text, article_id, up_votes, down_votes) VALUES ('joesfriend', 'i am also yappin bout joe', 2, 3, 1);
 
 SELECT articles.id, articles.user_name, articles.timestamp, articles.title, articles.body, articles.twitter_id, comments.article_id, comments.up_votes, comments.down_votes FROM articles INNER JOIN comments ON articles.id = comments.article_id;
+INSERT INTO comments (comment_user_name, comment_text, article_id, up_votes, down_votes) VALUES ('blorance', 'bob is a dick', 1, 2, 2);

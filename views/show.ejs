@@ -16,20 +16,33 @@
       <form method="GET" action="/articles/new">
         <input type="submit" value="Create a New Topic Thread">
       </form>
+      <form method="GET" action="/articles">
+        <input type="submit" value="Back to Articles">
+      </form>
     </div><!--buttons--> 
+    
     <div class="show_article_container">
       <h1><%=articleObjToPost.title%></h1>
-      <h2><%=articleObjToPost.user_name%></h2>
+      <h2>by <span><%=articleObjToPost.user_name%></span></h2>
       <p><%=articleObjToPost.body%></p>
-      <h3><%=articleObjToPost.twitter_id%></h3>
+      <h3><a href='https://www.twitter.com/<%=articleObjToPost.twitter_id%>'>@<%=articleObjToPost.twitter_id%></a></h3>
 
+    <div class="buttons">
+      <form method="GET" action="/articles/<%=articleObjToPost.id%>/comments/new">
+        <input type="hidden" name="data" value="<%=JSON.stringify(articleObjToPost)%>">
+        <input type="submit" value="Comment on <%=articleObjToPost.user_name%>'s post!">
+      </form>
+    </div><!--buttons-->     
 
     </div><!--show_article_container-->
-    <div class="comments_container">
         <ul>
- 
+          <% commentsObjToPost.forEach(function(e){ %>
+            <div class="comments_container">
+              <li><%=e.comment_text%> <span> | up votes <%=e.up_votes%> | boo votes <%=e.down_votes%> | <%=e.timestamp%></span></li>
+            </div><!--comments_container-->
+          <% }); %>
+
         </ul>
-    </div><!--comments_container-->
   </div><!--container-->
 
 </body>
