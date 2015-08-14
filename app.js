@@ -116,10 +116,10 @@ app.get('/articles/', function(req, res){
 });
 
 
-app.post('/articles/newcomment', function(req, res){
+app.post('/articles/newpost', function(req, res){
   var imgToAdd = req.body.picurl;
   console.log(imgToAdd);
-  var htmlNewCommentForm = fs.readFileSync('./views/new_comment.ejs', 'utf8');
+  var htmlNewCommentForm = fs.readFileSync('./views/new_post.ejs', 'utf8');
   var rendered = ejs.render(htmlNewCommentForm, {imgToAdd:imgToAdd});
   res.send(rendered);
 });
@@ -127,7 +127,6 @@ app.post('/articles/newcomment', function(req, res){
 app.get('/articles/:id', function(req, res){
   var articleId = parseInt(req.params.id);
   // console.log(articleId);
-  var htmlShow = fs.readFileSync('./views/show.ejs', 'utf8');
   var articleObjToPost;
   var commentsObjToPost = [];
   var commentsObj;
@@ -155,6 +154,7 @@ app.get('/articles/:id', function(req, res){
           });
         console.log("article obj.img_url", articleObjToPost.img_url)
         var htmlShowArticleById = fs.readFileSync('./views/show_article_by_id.ejs', 'utf8');
+        console.log("commentsobjtopost", commentsObjToPost)
         var rendered = ejs.render(htmlShowArticleById, {
           articleObjToPost: articleObjToPost,
           commentsObjToPost: commentsObjToPost
@@ -168,14 +168,13 @@ app.get('/articles/:id', function(req, res){
 });
 
 
-
 app.get('/articles/:id/comments/new', function(req, res){
   var articleIdComment = req.params.id;
   db.get('SELECT * FROM articles WHERE id=?', articleIdComment, function(err, row){
     if(err){
       console.log(err);
     } else {
-      // console.log(row);
+      console.log(row);
       var htmlNewCommentForm = fs.readFileSync('./views/new_comment.ejs', 'utf8');
       var rendered = ejs.render(htmlNewCommentForm, {row:row});
       res.send(rendered);
@@ -185,14 +184,19 @@ app.get('/articles/:id/comments/new', function(req, res){
 
 app.post('/articles/:article_id/comments', function(req, res){
   var newComment = req.body;
+  console.log('new comment', newComment);
+  // console.log("look you git the url: ", req.body.img_url);
   var articleId = req.params.article_id;
-  db.run("INSERT INTO comments (comment_user_name, comment_text, article_id) VALUES (?,?,?)", newComment.comment_user_name, newComment.comment_text, articleId, function(err){
+  //CHECK AD SEE IF ITS IN THE DB
+  db.run("INSERT INTO comments (comment_user_name, comment_text, article_id) VALUES (?,?,?)", newComment.name, newComment.comment, articleId, function(err){
     if(err){
       console.log(err);
     }
   });
   res.redirect('/articles/' + articleId)
 });
+
+//erything belowhere is shile
 
 app.put('/articles/:article_id/comments/:id/upvote', function(req, res){
   commentsId = req.params.id;

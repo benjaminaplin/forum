@@ -13,27 +13,23 @@
   <div class="container">
     
     <div class="formcontainer">
-      <img src="<%=row.img_url%>" alt="album" class="show_new_image">
-      <h1> Make a Post About <%row.title%> </h1>
-      <h2> <%=row.body%></h2>
-      <h3><%=row.timestamp%></h3>
-      <form method="POST" action="/articles/<%=row.id%>/comments">
+      <img src="<%=imgToAdd%>" alt="album" class="show_new_image">
+      <h1> Make a Comment About the Album Cover you Chose </h1>
+      <form method="POST" action="/">
         Name:
         <input name="name" type="text"><br>
-        
+        title:
+        <input name="title" type="text"><br>
         comment:
         <textarea name="comment" type="text"></textarea>
-        <input type="hidden" value="<%=row.img_url%>" name="img_url">
+        <input type="hidden" value="<%=imgToAdd%>" name="picurl">
         <input type="submit"> 
       </form>
   </div><!--formcontainer-->
 
-    <h2><a href="/articles/<%=row.id%>">cancel</a></h2>
+    <h2><a href="/">cancel</a></h2>
   </div><!--newpostcontainer-->
 
   </div>
 </body>
 </html>
-
-
-
