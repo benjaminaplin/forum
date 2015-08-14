@@ -50,18 +50,15 @@ app.get('/', function(req, res){
 });
 
 app.post('/', function(req, res){
-  console.log(req.body);
   var newPost = req.body;
-  parsedNewPost = JSON.parse(newPost);
+  console.log("nePost", newPost);
     db.run("INSERT INTO articles (user_name, img_url, title, body, twitter_id) VALUES (?,?,?,?,?)", newPost.user_name, newPost.picurl, newPost.title, newPost.body, newPost.twitter_id, function(err){
     if(err){
       console.log(err);
     }
   });
-  // var html = fs.readFileSync("./views/index.ejs", "utf8");
-  // var rendered = ejs.render(htmlNewCommentForm, {parsedNewPost:parsedNewPost});
-  // res.send(rendered);
-})
+  res.redirect('/');
+});
 
 app.get('/articles/', function(req, res){ 
     var artistsIds = [];  
@@ -89,12 +86,9 @@ app.get('/articles/', function(req, res){
       console.log(artistId);
       
       if(artistId === undefined){
-
         var html = fs.readFileSync("./views/bad_search.ejs", "utf8");
         res.send(html);
-
       } else {
-
         var requestAlbumsUrl = 'https://api.spotify.com/v1/artists/' + artistId + '/albums';
 
         request.get(requestAlbumsUrl, function(err, response, body){
@@ -102,12 +96,10 @@ app.get('/articles/', function(req, res){
           // console.log(parsedJSON.items);
 
             parsedJSON.items.forEach(function(e){
-              if(e.images[0] === undefined){
+              if(e.images[3] === undefined){
                 imgUndefined = true; 
                 var html = fs.readFileSync("./views/bad_search.ejs", "utf8");
                 res.send(html);
-
-
               } else {
               artistsImgs.push(e.images[0].url);
               }
@@ -132,10 +124,6 @@ app.post('/articles/newcomment', function(req, res){
   res.send(rendered);
 });
 
-app.post('/articles', function(req, res){
-  
-});
-
 app.get('/articles/:id', function(req, res){
   var articleId = parseInt(req.params.id);
   // console.log(articleId);
@@ -150,11 +138,10 @@ app.get('/articles/:id', function(req, res){
     } else {
       var articles = rows;
       articles.forEach(function(e){
-      if(articleId == parseInt(e.id)){
+        if(articleId == parseInt(e.id)){
           articleObjToPost = e;
-      }
+        }
     });
-      console.log("article obj", articleObjToPost)
       db.all('SELECT * FROM comments;', function(err, rows){
         if(err){
           console.log(err);
@@ -166,17 +153,21 @@ app.get('/articles/:id', function(req, res){
               commentsObjToPost.push(e);
             }
           });
-      var rendered = ejs.render(htmlShow, {
-        articleObjToPost: articleObjToPost,
-        commentsObjToPost: commentsObjToPost
-      });
-      res.send(rendered);
+        console.log("article obj.img_url", articleObjToPost.img_url)
+        var htmlShowArticleById = fs.readFileSync('./views/show_article_by_id.ejs', 'utf8');
+        var rendered = ejs.render(htmlShowArticleById, {
+          articleObjToPost: articleObjToPost,
+          commentsObjToPost: commentsObjToPost
+        });
+        res.send(rendered);
         }
           // console.log("commentsobjtopost", commentsObjToPost);
       });  
     }
   });
 });
+
+
 
 app.get('/articles/:id/comments/new', function(req, res){
   var articleIdComment = req.params.id;

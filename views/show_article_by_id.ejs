@@ -12,6 +12,8 @@
 <body>
   
   <div class="container">
+
+    <%=articleObjToPost.img_url%>
     <div class="buttons">
       <form method="GET" action="/articles/new">
         <input type="submit" value="Create a New Topic Thread">
@@ -23,7 +25,9 @@
     
     <div class="show_article_container">
       <h1><%=articleObjToPost.title%></h1>
+
       <h2>by <span><%=articleObjToPost.user_name%></span></h2>
+      <img src="<%=articleObjToPost.img_url%>" alt="album" class="show_new_image">
       <p><%=articleObjToPost.body%></p>
       <h3><a href='https://www.twitter.com/<%=articleObjToPost.twitter_id%>'>@<%=articleObjToPost.twitter_id%></a></h3>
 

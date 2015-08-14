@@ -20,20 +20,25 @@
       </form>
     </div><!--lookup--> 
     <div class="index_post_item">
-      <h3> <a href="/teams/<%=rows[0].id%>" class=""> </a> </h3>    
       <ul>
         <% rows.forEach(function(e){ %>
-          <div class="index_post_item">
-            <h2><%=e.title%></h2> 
-            <h3><%=e.user_name%> </h3>
-            <img src="<%=e.img_url%>" alt="album" class="show_new_image">
-            <p><%=e.body%>  <p>
-            <h4><%=e.twitter_id%>  </h4>
-            <h4><%=e.timestamp%>  </h4>  
-          <div/>        
+         <li>
+
+          <h3> <a href="/articles/<%=e.id%>"> Comment on this post</a> </h3>    
+
+          <h2><%=e.title%></h2> 
+          <h3><%=e.user_name%> </h3>
+          <img src="<%=e.img_url%>" alt="album" class="show_new_image">
+          <p><%=e.body%>  <p>
+          <h4><%=e.twitter_id%>  </h4>
+          <h4><%=e.timestamp%>  </h4>  
+
+         </li>
+        
         <% }); %>  
+
       </ul>
-    </div>
+    </div><!--index_post_item-->
   </div><!--container-->
 </body>
 </html>

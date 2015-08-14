@@ -57,15 +57,17 @@ input {
 }
 
 .index_post_item {
-  background-color: rgba(255,255,255,.45);
-  margin: 5px auto;
-  border: solid black 1px;
-  border-radius: 3px;
-  min-height: 37px;
+
+}
+
+div.index_post_item ul li {  
   list-style: none;
+  border: solid black 1px;
+  margin: 7px auto;
+  border-radius: 7px;
+  padding: 2px 10px;
   position: relative;
-  left: -37px;
-  padding: 13px;
+  right: 38px;
 }
 
 .index_post_item h3 {
