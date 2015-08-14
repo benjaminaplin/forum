@@ -9,8 +9,7 @@ var ejs = require("ejs");
 var app = express();
 var request = require('request');
 
-//spofity variables
-
+//global variables
 
 
 // view engine setup
@@ -38,40 +37,108 @@ app.listen(3000, function() {
 //routes
 
 app.get('/', function(req, res){
-  res.redirect('/articles');
-});
-
-app.get('/articles', function(req, res){
-  var html = fs.readFileSync('./views/index.ejs', 'utf8');
-  db.all('SELECT * FROM articles', function(err, rows){
+   db.all('SELECT * FROM articles;', function(err, rows){
     if(err){
       console.log(err);
     } else {
-      var rendered = ejs.render(html, {rows: rows});
+      console.log("rows", rows);
+      var html = fs.readFileSync("./views/index.ejs", "utf8");
+      var rendered = ejs.render(html, {rows:rows});
       res.send(rendered);
-    }
-  })
-
+      }
+  });
 });
 
-app.get('/articles/new', function(req, res){
-  var htmlNewForm = fs.readFileSync('./views/new_article.ejs', 'utf8');
-  res.send(htmlNewForm);
+app.post('/', function(req, res){
+  console.log(req.body);
+  var newPost = req.body;
+  parsedNewPost = JSON.parse(newPost);
+    db.run("INSERT INTO articles (user_name, img_url, title, body, twitter_id) VALUES (?,?,?,?,?)", newPost.user_name, newPost.picurl, newPost.title, newPost.body, newPost.twitter_id, function(err){
+    if(err){
+      console.log(err);
+    }
+  });
+  // var html = fs.readFileSync("./views/index.ejs", "utf8");
+  // var rendered = ejs.render(htmlNewCommentForm, {parsedNewPost:parsedNewPost});
+  // res.send(rendered);
+})
+
+app.get('/articles/', function(req, res){ 
+    var artistsIds = [];  
+    var artistId;  
+    var artistsImgs = [];
+    var imgUndefined;
+
+    // console.log(req.query.artist);
+
+    var tag = req.query.artist;
+    // console.log('tag', tag.artist);
+
+    var requestArtistUrl = 'https://api.spotify.com/v1/search?q='+ tag +'&type=artist';
+
+    request.get(requestArtistUrl, function(err, response, body){
+      var parsedJSON = JSON.parse(body);
+      var myParsedData = parsedJSON;
+
+      myParsedData.artists.items.forEach(function(e){
+        // console.log(e.id);
+        artistsIds.push(e.id);
+      });
+      console.log(artistsIds);  
+      artistId = artistsIds[0];
+      console.log(artistId);
+      
+      if(artistId === undefined){
+
+        var html = fs.readFileSync("./views/bad_search.ejs", "utf8");
+        res.send(html);
+
+      } else {
+
+        var requestAlbumsUrl = 'https://api.spotify.com/v1/artists/' + artistId + '/albums';
+
+        request.get(requestAlbumsUrl, function(err, response, body){
+          var parsedJSON = JSON.parse(body);
+          // console.log(parsedJSON.items);
+
+            parsedJSON.items.forEach(function(e){
+              if(e.images[0] === undefined){
+                imgUndefined = true; 
+                var html = fs.readFileSync("./views/bad_search.ejs", "utf8");
+                res.send(html);
+
+
+              } else {
+              artistsImgs.push(e.images[0].url);
+              }
+            });
+            // console.log(artistsImgs);
+            if(!imgUndefined){
+              var html = fs.readFileSync("./views/new_image.ejs", "utf8");
+              var rendered = ejs.render(html, {artistsImgs: artistsImgs});
+              res.send(rendered);
+            }
+      }); 
+    } 
+  });  
+});
+
+
+app.post('/articles/newcomment', function(req, res){
+  var imgToAdd = req.body.picurl;
+  console.log(imgToAdd);
+  var htmlNewCommentForm = fs.readFileSync('./views/new_comment.ejs', 'utf8');
+  var rendered = ejs.render(htmlNewCommentForm, {imgToAdd:imgToAdd});
+  res.send(rendered);
 });
 
 app.post('/articles', function(req, res){
-  var newPost = req.body;
-  db.run("INSERT INTO articles (user_name, title, body, twitter_id) VALUES (?,?,?,?)", newPost.user_name, newPost.title, newPost.body, newPost.twitter_id, function(err){
-  if(err){
-    console.log(err);
-  }
-});
-  res.redirect('/articles');
+  
 });
 
 app.get('/articles/:id', function(req, res){
   var articleId = parseInt(req.params.id);
-  console.log(articleId);
+  // console.log(articleId);
   var htmlShow = fs.readFileSync('./views/show.ejs', 'utf8');
   var articleObjToPost;
   var commentsObjToPost = [];

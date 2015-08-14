@@ -11,23 +11,29 @@
 </head>
 <body>
   <div class="container">
-    
-    <h1> Forum </h1>
-    <div class="buttons">
-      <form method="GET" action="/articles/new">
-        <input type="submit" value="Create a New Topic Thread">
+  <h1> Forum </h1>
+    <div class="lookup">
+      <h1>looks up artists</h1>
+      <form method="GET" action="/articles">
+        <input name="artist" type="text" placeholder="title">
+        <input type="submit" value="get artist">
       </form>
-    </div><!--buttons--> 
-    <div class="postscontainer">
-      <h2> Latest Posts</h2>    
-        <ul>
-           <% rows.forEach(function(e){ %>
-            <li class="index_post_item"><span><a href="/articles/<%=e.id%>"><%=e.title%></a></span> by <strong><%=e.user_name%> </strong> on <%=e.timestamp%>    
-     
-            </li>        
-           <% }); %>  
-        </ul>
-    </div><!--posts container-->
+    </div><!--lookup--> 
+    <div class="index_post_item">
+      <h3> <a href="/teams/<%=rows[0].id%>" class=""> </a> </h3>    
+      <ul>
+        <% rows.forEach(function(e){ %>
+          <div class="index_post_item">
+            <h2><%=e.title%></h2> 
+            <h3><%=e.user_name%> </h3>
+            <img src="<%=e.img_url%>" alt="album" class="show_new_image">
+            <p><%=e.body%>  <p>
+            <h4><%=e.twitter_id%>  </h4>
+            <h4><%=e.timestamp%>  </h4>  
+          <div/>        
+        <% }); %>  
+      </ul>
+    </div>
   </div><!--container-->
 </body>
 </html>

@@ -11,18 +11,24 @@
 </head>
 <body>
   <div class="container">
-
-    <div class="newpostcontainer">
-      <h1> add a comment to <%=row.user_name%>'s post! </h1>
-      <form method="POST" action="/articles/<%=row.id%>/comments">
-        comment_user_name:
-        <input name="comment_user_name" type="text"><br>
-        comment text:
-        <textarea name="comment_text" type="text"></textarea><br>
+    
+    <div class="formcontainer">
+      <img src="<%=imgToAdd%>" alt="album" class="show_new_image">
+      <h1> Make a Comment About the Album Cover you Chose </h1>
+      <form method="POST" action="/">
+        Name:
+        <input name="name" type="text"><br>
+        title:
+        <input name="title" type="text"><br>
+        comment:
+        <textarea name="comment" type="text"></textarea>
+        <input type="hidden" value="<%=imgToAdd%>" name="picurl">
         <input type="submit"> 
       </form>
-      <h2><a href="/articles"></a>cancel</h2>
-    </div><!--newpostcontainer-->
+  </div><!--formcontainer-->
+
+    <h2><a href="/">cancel</a></h2>
+  </div><!--newpostcontainer-->
 
   </div>
 </body>
