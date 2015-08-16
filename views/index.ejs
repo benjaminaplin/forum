@@ -7,28 +7,86 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/style.css">    
 </head>
+
 <body>
-  <div class="container">
-    
-    <h1> Forum </h1>
-    <div class="buttons">
-      <form method="GET" action="/articles/new">
-        <input type="submit" value="Create a New Topic Thread">
-      </form>
-    </div><!--buttons--> 
-    <div class="postscontainer">
-      <h2> Latest Posts</h2>    
-        <ul>
-           <% rows.forEach(function(e){ %>
-            <li class="index_post_item"><span><a href="/articles/<%=e.id%>"><%=e.title%></a></span> by <strong><%=e.user_name%> </strong> on <%=e.timestamp%>    
-     
-            </li>        
-           <% }); %>  
+  <div class="pure-g wrapper">
+    <!-- HEADER -->
+    <header class="pure-u-1">
+      <div class="header-box">
+        <h1>Albums &amp; Covers</h1>
+        <!-- NAV -->
+        <nav class="pure-menu pure-menu-horizontal pure-u-1">
+          <ul class="pure-menu-list">
+            <li class="pure-menu-item">
+              <a href="/" class="pure-menu-link">Home</a>
+            </li>
+            <li class="pure-menu-item">
+              <a href="/about" class="pure-menu-link">About</a>
+            </li>
+          </ul>
+        </nav>
+      </div><!--header-box-->
+    </header> <!--pure-u-1-->
+</div><!--pure-g wrapper-->
+<div class="pure-g wrapper">
+  <div class="pure-u-1">
+   <div class="lookup_sort">
+     <div class="lookup">
+       <h1>looks up an artist, choose an album to start your thread</h1>
+       <form method="GET" action="/articles">
+         <input name="artist" type="text" placeholder="title">
+         <input type="submit" value="get artist">
+       </form>
+      </div><!--lookup--> 
+      
+      <div class="pure-menu pure-menu-horizontal">
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+            <a href="#" id="menuLink1" class="pure-menu-link">Sort Album Posts!</a>
+            <ul class="pure-menu-children">
+
+              <li class="pure-menu-item"><a href="/sortupvotes" class="pure-menu-link">Up Votes</a></li>
+              <li class="pure-menu-item"><a href="/sortdownvotes" class="pure-menu-link">Down Votes</a></li>
+              <li class="pure-menu-item"><a href="/sortrecent" class="pure-menu-link"> Recent</a></li>
+            </ul>
+          </li>
         </ul>
-    </div><!--posts container-->
-  </div><!--container-->
+      </div><!--pure-menu pure-menu-horizontal-->
+
+  </div><!--lookup_sort-->
+</div><!--pure-u-1-->
+<!--body-->
+  <section class="pure-u-1 content-wrapper">
+   <div class="pure-g content-grid">
+    <% rows.forEach(function(e){ %>
+        <div class="pure-u-1-3">
+              <h3> <a id="page_load_point<%=e.id%>" href="/articles/<%=e.id%>"> Comment on this post</a> </h3>    
+              <h2><%=e.title%></h2> 
+              <h3><%=e.user_name%> </h3>
+              <img src="<%=e.img_url%>" alt="album" class="show_new_image">
+              <p><%=e.body%>  <p>
+              <h4><i class="fa fa-thumbs-o-up"></i>  <%=e.up_votes%>  </h4>
+              <h4><i class="fa fa-thumbs-down"></i>  <%=e.down_votes%>  </h4>
+              <h4><a href='https://www.twitter.com/<%=e.twitter_id%>'>@<%=e.twitter_id%> </a> </h4>
+              <h4> Posted: <%=e.timestamp%>  </h4>  
+              <div class="buttons">
+                <form method="POST" action="/articles/<%=e.id%>/upvote?_method=PUT">
+                  <input type="submit" value="Vote up!!">                   
+                  <input type="hidden" name="data" value="<%=JSON.stringify(e)%>">
+                </form>
+                <form method="POST" action="/articles/<%=e.id%>/downvote?_method=PUT"> 
+                  <input type="submit" value="Vote Down!">
+                </form>
+              </div><!--buttons-->   
+          </div><!--pure-u-1-3-->        
+          <% }); %>  
+        </div><!--pure-g content-grid-->
+  </section><!--pure-u-1 content-wrapper-->
+</div><!--pure-g-wrapper-->
+
 </body>
 </html>
 

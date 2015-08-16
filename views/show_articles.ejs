@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/style.css">    
 </head>
 <body>
-<div class="pure-g wrapper">
+  <div class="pure-g wrapper">
     <!-- HEADER -->
     <header class="pure-u-1">
       <div class="header-box">
@@ -27,29 +27,19 @@
           </ul>
         </nav>
       </div><!--header-box-->
-    </header> <!--pure-u-1-->  
-  <div class="container">
+    </header> <!--pure-u-1-->
+      <div class="container">
+        
 
-    <div class="newpostcontainer">
-      <h1> add a new post! </h1>
-       <ul>
-    <% myParsedData.data.forEach(function(e) {%>
-      <li>
-        <img src="<%=e.images.low_resolution.url%>">
-        <div class="buttons">
-          <form method="GET" action="/">
-            <input type="submit" value="cancel">
-          </form>
-          <form method="POST" action="/pics">
-            <input type="submit" value="add me">
-            <input type="hidden" value="<%=e.images.low_resolution.url%>" name="picurl">
-          </form>
-        </div><!--buttons-->
-      </li>
-    <% });%>
-    </ul>
-    </div><!--newpostcontainer-->
-</div><!--pure-g wrapper-->    
+
+
+        
+      </div><!--container-->
+
+      </div><!--pure-g-wrapper-->
+
+
+
 
   </div>
 </body>

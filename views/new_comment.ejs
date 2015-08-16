@@ -10,20 +10,47 @@
     <link rel="stylesheet" href="/style.css">    
 </head>
 <body>
-  <div class="container">
-
-    <div class="newpostcontainer">
-      <h1> add a comment to <%=row.user_name%>'s post! </h1>
+  <div class="pure-g wrapper">
+    <!-- HEADER -->
+    <header class="pure-u-1">
+      <div class="header-box">
+        <h1>Albums &amp; Covers</h1>
+        <!-- NAV -->
+        <nav class="pure-menu pure-menu-horizontal pure-u-1">
+          <ul class="pure-menu-list">
+            <li class="pure-menu-item">
+              <a href="/" class="pure-menu-link">Home</a>
+            </li>
+            <li class="pure-menu-item">
+              <a href="/about" class="pure-menu-link">About</a>
+            </li>
+          </ul>
+        </nav>
+      </div><!--header-box-->
+    </header> <!--pure-u-1-->
+    <div class="container">
+    
+    <div class="formcontainer">
+      <img src="<%=row.img_url%>" alt="album" class="show_new_image">
+      <h1> Make a Post About <%row.title%> </h1>
+      <h2> <%=row.body%></h2>
+      <h3><%=row.timestamp%></h3>
       <form method="POST" action="/articles/<%=row.id%>/comments">
-        comment_user_name:
-        <input name="comment_user_name" type="text"><br>
-        comment text:
-        <textarea name="comment_text" type="text"></textarea><br>
+        Name:
+        <input name="name" type="text"><br>
+        
+        comment:
+        <textarea name="comment" type="text"></textarea>
+        <input type="hidden" value="<%=row.img_url%>" name="img_url">
         <input type="submit"> 
       </form>
-      <h2><a href="/articles"></a>cancel</h2>
-    </div><!--newpostcontainer-->
+    </div><!--formcontainer-->
 
-  </div>
+    <h2><a href="/articles/<%=row.id%>">cancel</a></h2>
+  </div><!--container-->
+</div><!--pure-g wrapper-->
 </body>
 </html>
+
+
+

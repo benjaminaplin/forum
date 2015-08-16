@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/style.css">    
 </head>
 <body>
-<div class="pure-g wrapper">
+  <div class="pure-g wrapper">
     <!-- HEADER -->
     <header class="pure-u-1">
       <div class="header-box">
@@ -27,30 +27,32 @@
           </ul>
         </nav>
       </div><!--header-box-->
-    </header> <!--pure-u-1-->  
+    </header> <!--pure-u-1-->
   <div class="container">
+    <section class="pure-u-1 content-wrapper">
+      <div class="pure-g content-grid">
 
-    <div class="newpostcontainer">
-      <h1> add a new post! </h1>
-       <ul>
-    <% myParsedData.data.forEach(function(e) {%>
-      <li>
-        <img src="<%=e.images.low_resolution.url%>">
-        <div class="buttons">
-          <form method="GET" action="/">
-            <input type="submit" value="cancel">
-          </form>
-          <form method="POST" action="/pics">
+      <% artistsImgs.forEach(function(e){%>
+        <div class="pure-u-1-3">
+          <img src="<%=e%>" alt="album" class="show_new_image">
+
+        <div class="buttons">    
+          <form method="POST" action="/articles/newpost">
             <input type="submit" value="add me">
-            <input type="hidden" value="<%=e.images.low_resolution.url%>" name="picurl">
+            <input type="hidden" value="<%=e%>" name="picurl">
           </form>
         </div><!--buttons-->
-      </li>
-    <% });%>
-    </ul>
-    </div><!--newpostcontainer-->
-</div><!--pure-g wrapper-->    
+        </div><!--pure-u-1-3-->
+      <%});%>
+
+      </div><!--pure-g content-grid-->
+    </section><!--pure-u-1 content-wrapper-->
+
+    <h2><a href="/">search for another image</a></h2>
+  </div><!--newpostcontainer-->
 
   </div>
+</div><!--pure-g wrapper-->
+
 </body>
 </html>

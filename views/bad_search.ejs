@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/style.css">    
 </head>
 <body>
-<div class="pure-g wrapper">
+  <div class="pure-g wrapper">
     <!-- HEADER -->
     <header class="pure-u-1">
       <div class="header-box">
@@ -27,29 +27,19 @@
           </ul>
         </nav>
       </div><!--header-box-->
-    </header> <!--pure-u-1-->  
-  <div class="container">
+    </header> <!--pure-u-1-->
+      <div class="container">
+        <h1>That Search Was Heino, Try Again <br><a href="/bad_search">ok</a></h1>
 
-    <div class="newpostcontainer">
-      <h1> add a new post! </h1>
-       <ul>
-    <% myParsedData.data.forEach(function(e) {%>
-      <li>
-        <img src="<%=e.images.low_resolution.url%>">
-        <div class="buttons">
-          <form method="GET" action="/">
-            <input type="submit" value="cancel">
-          </form>
-          <form method="POST" action="/pics">
-            <input type="submit" value="add me">
-            <input type="hidden" value="<%=e.images.low_resolution.url%>" name="picurl">
-          </form>
-        </div><!--buttons-->
-      </li>
-    <% });%>
-    </ul>
-    </div><!--newpostcontainer-->
-</div><!--pure-g wrapper-->    
+      <div class="only_image_on_page_div">
+         <img src="http://i.imgur.com/g88JCnk.jpg" alt="album" class="only_image_on_page_url">
+       </div><!--only_image_on_page_div-->
+      </div><!--container-->
+
+      </div><!--pure-g-wrapper-->
+
+
+
 
   </div>
 </body>
