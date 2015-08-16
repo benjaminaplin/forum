@@ -8,7 +8,9 @@ CREATE TABLE articles (
   timestamp DATE DEFAULT (datetime('now','localtime')),
   title VARCHAR,
   img_url VARCHAR, 
-  body  TEXT,
+  body  TEXT,  
+  up_votes INTEGER,
+  down_votes INTEGER,
   twitter_id VARCHAR
  );
 
@@ -23,8 +25,8 @@ CREATE TABLE comments (
   FOREIGN KEY(article_id) REFERENCES articles(id)
 );
 
-INSERT INTO articles (user_name, img_url, title, body, twitter_id) VALUES ('bob', 'https://i.scdn.co/image/ac915bc85837edc36a8a994761d4e53c1a067f2e','bobs thoughts', 'i forgot my thoughts already, sorry', 'bob_rawks');
-INSERT INTO articles (user_name, img_url, title, body, twitter_id) VALUES ('joe', 'https://i.scdn.co/image/46d019a6be25f60a823439a339b9add7afd93ac2', 'joes thoughts', 'i have thoughts', 'joe_rawks');
+INSERT INTO articles (user_name, img_url, title, body, up_votes, down_votes, twitter_id) VALUES ('joe', 'https://i.scdn.co/image/2744f9fb06f97b5133e523f69bccd0c838dc10c3', 'joes thoughts', 'i have thoughts', 2, 4,'joe_rawks');
+INSERT INTO articles (user_name, img_url, title, body, up_votes, down_votes, twitter_id) VALUES ('bob', 'https://i.scdn.co/image/0fa06ced09a799f78629a2ee354dc294f7513940','bobs thoughts', 'i forgot my thoughts already, sorry', 1, 3, 'bob_rawks');
 
 INSERT INTO comments (comment_user_name, comment_text, article_id, up_votes, down_votes) VALUES ('bobsbud', 'i am talkin bout bob thoughts', 1, 1, 3);
 INSERT INTO comments (comment_user_name, comment_text, article_id, up_votes, down_votes) VALUES ('bobsfriend', 'i am also yappin bout bob', 1, 4, 2);

@@ -10,7 +10,25 @@
     <link rel="stylesheet" href="/style.css">    
 </head>
 <body>
-  <div class="container">
+  <div class="pure-g wrapper">
+    <!-- HEADER -->
+    <header class="pure-u-1">
+      <div class="header-box">
+        <h1>Albums &amp; Covers</h1>
+        <!-- NAV -->
+        <nav class="pure-menu pure-menu-horizontal pure-u-1">
+          <ul class="pure-menu-list">
+            <li class="pure-menu-item">
+              <a href="/" class="pure-menu-link">Home</a>
+            </li>
+            <li class="pure-menu-item">
+              <a href="/about" class="pure-menu-link">About</a>
+            </li>
+          </ul>
+        </nav>
+      </div><!--header-box-->
+    </header> <!--pure-u-1-->
+    <div class="container">
     
     <div class="formcontainer">
       <img src="<%=row.img_url%>" alt="album" class="show_new_image">
@@ -26,12 +44,11 @@
         <input type="hidden" value="<%=row.img_url%>" name="img_url">
         <input type="submit"> 
       </form>
-  </div><!--formcontainer-->
+    </div><!--formcontainer-->
 
     <h2><a href="/articles/<%=row.id%>">cancel</a></h2>
-  </div><!--newpostcontainer-->
-
-  </div>
+  </div><!--container-->
+</div><!--pure-g wrapper-->
 </body>
 </html>
 
