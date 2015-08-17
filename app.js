@@ -29,8 +29,8 @@ var methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
 //config
-app.listen(3000, function() {
-  console.log("I'm listening for album covers on 3000 !");
+app.listen(80, function() {
+  console.log("I'm listening for album covers on 80 !");
 });
 
 //routes
