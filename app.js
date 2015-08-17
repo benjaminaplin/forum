@@ -29,8 +29,8 @@ var methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
 //config
-app.listen(80, function() {
-  console.log("I'm listening for album covers on 80 !");
+app.listen(3000, function() {
+  console.log("I'm listening for album covers on 3000 !");
 });
 
 //routes
@@ -45,7 +45,7 @@ app.post('/', function(req, res){
 });
 
 app.get('/', function(req, res){
-   db.all('SELECT * FROM articles;', function(err, rows){
+   db.all('SELECT * from ARTICLES ORDER BY up_votes DESC;', function(err, rows){
     if(err){
       console.log(err);
     } else {
@@ -105,7 +105,6 @@ app.get('/articles', function(req, res){
     var myParsedData = parsedJSON;
 
   myParsedData.artists.items.forEach(function(e){
-        // console.log(e.id);
       artistsIds.push(e.id);
     });
   console.log(artistsIds);  
@@ -122,7 +121,6 @@ app.get('/articles', function(req, res){
 
     request.get(requestAlbumsUrl, function(err, response, body){
       var parsedJSON = JSON.parse(body);
-          // console.log(parsedJSON.items);
       parsedJSON.items.forEach(function(e){
         if(e.images[2] === undefined){
           console.log("images undefined");
@@ -130,12 +128,9 @@ app.get('/articles', function(req, res){
           var html = fs.readFileSync("./views/bad_search.ejs", "utf8");
           res.send(html);
         } else {
-          console.log("images not undefined");
-
           artistsImgs.push(e.images[0].url);
         }
       });
-            // console.log(artistsImgs);
         if(!imgUndefined){
           var html = fs.readFileSync("./views/new_image.ejs", "utf8");
           var rendered = ejs.render(html, {artistsImgs: artistsImgs});
@@ -164,7 +159,6 @@ app.post('/articles/newpost', function(req, res){
 
 app.get('/articles/:id', function(req, res){
   var articleId = parseInt(req.params.id);
-  // console.log(articleId);
   var articleObjToPost;
   var commentsObjToPost = [];
   var commentsObj;
@@ -184,13 +178,11 @@ app.get('/articles/:id', function(req, res){
           console.log(err);
         } else {
           var comments = rows;
-          // console.log("comments", comments);
           comments.forEach(function(e){
             if(articleId == parseInt(e.article_id)){
               commentsObjToPost.push(e);
             }
           });
-        console.log("article obj.img_url", articleObjToPost.img_url)
         var htmlShowArticleById = fs.readFileSync('./views/show_article_by_id.ejs', 'utf8');
         var rendered = ejs.render(htmlShowArticleById, {
           articleObjToPost: articleObjToPost,
@@ -198,7 +190,6 @@ app.get('/articles/:id', function(req, res){
         });
         res.send(rendered);
         }
-          // console.log("commentsobjtopost", commentsObjToPost);
       });  
     }
   });

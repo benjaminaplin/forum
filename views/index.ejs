@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
       <title>Ridic Album Covers</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
@@ -35,7 +36,7 @@
   <div class="pure-u-1">
    <div class="lookup_sort">
      <div class="lookup">
-       <h1>look up an artist, choose an album to start your thread</h1>
+       <h1>look up an artist &amp; choose an album to start your thread</h1>
        <form method="GET" action="/articles">
          <input name="artist" type="text" placeholder="title">
          <input type="submit" value="get artist's albums">
@@ -59,10 +60,39 @@
   </div><!--lookup_sort-->
 </div><!--pure-u-1-->
 <!--body-->
-  <section class="pure-u-1 content-wrapper">
+  <section class="pure-u-1 content-wrapper full">
    <div class="pure-g content-grid">
     <% rows.forEach(function(e){ %>
         <div class="pure-u-1-3">
+          <div class="indexpost">
+              <h3> <a id="page_load_point<%=e.id%>" href="/articles/<%=e.id%>"> Comment on this post</a> </h3>    
+              <h2><%=e.title%></h2> 
+              <h3><%=e.user_name%> </h3>
+              <img src="<%=e.img_url%>" alt="album" class="show_new_image">
+              <p><%=e.body%>  <p>
+              <h4><i class="fa fa-thumbs-o-up"></i>  <%=e.up_votes%>  </h4>
+              <h4><i class="fa fa-thumbs-down"></i>  <%=e.down_votes%>  </h4>
+              <h4><a href='https://www.twitter.com/<%=e.twitter_id%>'>@<%=e.twitter_id%> </a> </h4>
+              <h4> Posted: <%=e.timestamp%>  </h4>  
+              <div class="buttons">
+                <form method="POST" action="/articles/<%=e.id%>/upvote?_method=PUT">
+                  <input type="submit" value="Vote up!!">                   
+                  <input type="hidden" name="data" value="<%=JSON.stringify(e)%>">
+                </form>
+                <form method="POST" action="/articles/<%=e.id%>/downvote?_method=PUT"> 
+                  <input type="submit" value="Vote Down!">
+                </form>
+              </div><!--buttons-->   
+            </div>
+          </div><!--pure-u-1-3-->        
+          <% }); %>  
+        </div><!--pure-g content-grid-->
+  </section><!--pure-u-1 content-wrapper-->
+  
+  <section class="pure-u-1 content-wrapper mobile">
+   <div class="pure-g content-grid">
+    <% rows.forEach(function(e){ %>
+        <div class="pure-u-1-1">
           <div class="indexpost">
               <h3> <a id="page_load_point<%=e.id%>" href="/articles/<%=e.id%>"> Comment on this post</a> </h3>    
               <h2><%=e.title%></h2> 
@@ -86,7 +116,7 @@
           </div><!--pure-u-1-3-->        
           <% }); %>  
         </div><!--pure-g content-grid-->
-  </section><!--pure-u-1 content-wrapper-->
+  </section><!--pure-u-1 content-wrapper mobile-->
 </div><!--pure-g-wrapper-->
 
 </body>
