@@ -137,6 +137,13 @@ li.pure-menu-item.pure-menu-has-children {
   list-style: none;
 }
 
+#bad_search {
+  letter-spacing: 0em;
+  margin: 0 auto;
+  padding-left: 125px;
+
+}
+
 /* customized pure css below */
 
 .wrapper {
