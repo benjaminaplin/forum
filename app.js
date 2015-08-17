@@ -36,7 +36,7 @@ app.listen(80, function() {
 //routes
 app.post('/', function(req, res){
   var newPost = req.body;
-    db.run("INSERT INTO articles (user_name, img_url, title, body, up_votes, down_votes, twitter_id) VALUES (?,?,?,?,?,?,?)", newPost.user_name, newPost.picurl, newPost.title, newPost.body, 0, 0, newPost.twitter_id, function(err){
+    db.run("INSERT INTO articles (user_name, img_url, title, body, up_votes, down_votes, twitter_id) VALUES (?,?,?,?,?,?,?)", newPost.name, newPost.picurl, newPost.title, newPost.comment, 0, 0, newPost.twitter_id, function(err){
     if(err){
       console.log(err);
     }
